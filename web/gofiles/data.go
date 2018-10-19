@@ -6,13 +6,13 @@ type Launches struct{
 
 
 type Launch struct {
-	//Id 			int 		`json:"id"`
+	Id 			int 		`json:"id"`
 	Name 		string 		`json:"name"`
 	Location 	Location 	`json:"location"`
 	Net			string		`json:"net"`
-	Pads 		[]Pads 		`json:"pads"`
 	Rocket		Rocket		`json:"rocket"`
 	Missions	[]Missions	`json:"missions"`
+	//Lsp			Lsp			`json:"lsp"`
 }
 
 type Rocket struct {
@@ -25,13 +25,21 @@ type Rocket struct {
 type Missions struct {
 	Name 		string		`json:"name"`
 	Description string		`json:"description"`
+	Wikiurl		string		`json:"wikiurl"`
 }
 
 type Location struct {
 	Name 		string 		`json:"name"`
+	Countrycode string		`json:"countrycode"`
+	Pads 		[]Pads 		`json:"pads"`
 }
 
 type Pads struct {
 	Name 		string 		`json:"name"`
 	Wikiurl		string		`json:"wikiurl"`
 }
+/*
+type Lsp struct {
+	Name		string		`json:"name"`
+	Wikiurl		string		`json:"wikiurl"`
+}*/
