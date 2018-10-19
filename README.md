@@ -1,5 +1,8 @@
 # NASA Space Apps 2018
 
+## Note
+There are two ``.gitignore`` files in this project. The one in the ``web`` folder is there because we have another repository for Heroku in that folder.
+
 ## [Team](https://2018.spaceappschallenge.org/challenges/can-you-build/when-next-rocket-launch/teams/caps-lock/project)
 ### Caps Lock
 | Name                  | Github                                            |
