@@ -38,7 +38,7 @@ public class MainActivity extends AppCompatActivity {
         try {
             launches = fillLaunchArray(dataURL);
         } catch (IOException | JSONException e) {
-            System.out.println("Error: " + e.getMessage());
+            System.out.println("gError: " + e.getMessage());
         }
 
         if (launches != null) {
