@@ -1,0 +1,13 @@
+{
+  "name": "space"
+  "description": "NASA SpaceApps submission",
+  "keywords": [
+    "NASA",
+    "go",
+    "hackathon"
+  ],
+  "image": "heroku/go:1.9",
+  "mount_dir": "src/github.com/JohanAanesen/NASA_SpaceApps_2018",
+  "website": "http://github.com/JohanAanesen/NASA_SpaceApps_2018",
+  "repository": "http://github.com/JohanAanesen/NASA_SpaceApps_2018"
+}

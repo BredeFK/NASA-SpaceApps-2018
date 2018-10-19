@@ -1,0 +1,9 @@
+{
+	"ImportPath": "github.com/JohanAanesen/NASA_SpaceApps_2018/web",
+	"GoVersion": "go1.9",
+	"GodepVersion": "v80",
+	"Packages": [
+		"./..."
+	],
+	"Deps": []
+}
