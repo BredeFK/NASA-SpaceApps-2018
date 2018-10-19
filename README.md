@@ -1,15 +1,14 @@
 # NASA Space Apps 2018
 
-## Team
+## [Team](https://2018.spaceappschallenge.org/challenges/can-you-build/when-next-rocket-launch/teams/caps-lock/project)
 ### Caps Lock
-- Brede Fritjof Klausen
-- Johan Aanesen
-
-### Website
-https://2018.spaceappschallenge.org/challenges/can-you-build/when-next-rocket-launch/teams/caps-lock/project
+| Name                  | Github                                            |
+|-----------------------|---------------------------------------------------|
+| Brede Fritjof Klausen | [BredeFK](https://github.com/BredeFK)             |
+| Johan Aanesen         | [JohanAanesen](https://github.com/JohanAanesen)   |
 
 ## The Challenge
-### Do YOU Know When the Next Rocket Launch Is?
+### [Do YOU Know When the Next Rocket Launch Is?](https://2018.spaceappschallenge.org/challenges/can-you-build/when-next-rocket-launch/details)
 Create a tool to track international rocket launch information.
 ### Background
 In the emerging era of privatized spaceflight, another space-bound rocket seems to launch every week. Nations around the world have launched rockets carrying satellites and space probes within the past few years. Private companies are now doing launches as well.
