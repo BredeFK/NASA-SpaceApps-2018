@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!--NASAs background color for their logo-->
+    <color name="colorPrimary">#0b3d91</color>
+    <!--A darker version of the colorPrimary-->
+    <color name="colorPrimaryDark">#1C049E</color>
+    <!--NASAs other color for their logo-->
+    <color name="colorAccent">#fc3d21</color>
+</resources>
