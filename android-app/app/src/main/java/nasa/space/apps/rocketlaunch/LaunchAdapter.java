@@ -2,17 +2,29 @@ package nasa.space.apps.rocketlaunch;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.drawable.Drawable;
+import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.support.annotation.NonNull;
-import android.util.DisplayMetrics;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import java.util.Locale;
+
 import nasa.space.apps.rocketlaunch.data.Launch;
+
+class ViewHolder {
+    TextView name;
+    TextView timeLeft;
+    TextView lspName;
+    ImageView image;
+
+}
 
 public class LaunchAdapter extends ArrayAdapter<Launch> {
     private Activity activity;
@@ -38,69 +50,60 @@ public class LaunchAdapter extends ArrayAdapter<Launch> {
 
         // This simple line makes the ListView way smoother, thanks to
         // https://stackoverflow.com/a/25381936/8883030
-        // if (convertView == null) {
+        //if (convertView == null) {
 
         convertView = activity.getLayoutInflater().inflate(R.layout.launch_item, parent, false);
-        TextView name = convertView.findViewById(R.id.launch_name);
-        final TextView timeLeft = convertView.findViewById(R.id.launch_timeLeft);
-        ImageView image = convertView.findViewById(R.id.launch_image);
+        final ViewHolder holder = new ViewHolder();
 
-        name.setText(launch.getName());
+        holder.name = convertView.findViewById(R.id.info_name);
+        holder.timeLeft = convertView.findViewById(R.id.launch_timeLeft);
+        holder.lspName = convertView.findViewById(R.id.launch_lsp);
+        holder.image = convertView.findViewById(R.id.info_image);
+        convertView.setTag(holder);
 
-
-
-        Bitmap bitmapImage = launch.getRocket().getImageInBitmap();
-
-
-        if (bitmapImage != null) {
-            image.setImageBitmap(bitmapImage);
+        holder.name.setText(launch.getName());
+        if (launch.getLsp() != null) {
+            holder.lspName.setText(launch.getLsp().getName());
+        } else {
+            holder.lspName.setText("N/A");
         }
+
+        Drawable.ConstantState black = activity.getResources().getDrawable(android.R.color.black).getConstantState();
+        if (holder.image.getDrawable().getConstantState() == black) {
+            Bitmap bitmapImage = launch.getRocket().getImageInBitmap();
+
+            if (bitmapImage != null) {
+                holder.image.setImageBitmap(bitmapImage);
+            }
+        }
+
         new CountDownTimer(launch.getNetInMills() - System.currentTimeMillis(), 1000) {
 
             public void onTick(long millisUntilFinished) {
-                timeLeft.setText(getTimeInSmoothFormat(launch.getNetInMills() - System.currentTimeMillis()));
+                holder.timeLeft.setText(getTimeInSmoothFormat(launch.getNetInMills() - System.currentTimeMillis()));
             }
 
             public void onFinish() {
-                timeLeft.setText(R.string.take_off);
+                holder.timeLeft.setText(R.string.take_off);
+
+
+                // TODO : possibly notify user
             }
         }.start();
 
-            /*
-            convertView = this.activity.getLayoutInflater().inflate(R.layout.product_view, parent, false);
 
-            ViewHolder holder = new ViewHolder();
-
-            holder.image = convertView.findViewById(R.id.product_image);
-            holder.title = convertView.findViewById(R.id.product_title);
-            holder.subTitle = convertView.findViewById(R.id.product_subtitle);
-            holder.price = convertView.findViewById(R.id.product_price);
-            holder.pricePerUnit = convertView.findViewById(R.id.product_price_pr_unit);
-            holder.link = convertView.findViewById(R.id.product_link);
-            convertView.setTag(holder);
-
-
-            holder.image.setImageBitmap(productRow.getImageName());
-            holder.title.setText(productRow.getTitle());
-            holder.subTitle.setText(productRow.getSubTitle());
-            System.out.println(productRow.getTitle() + ": " + productRow.getUnit());
-            holder.price.setText(productRow.getPriceFormatted());
-            holder.pricePerUnit.setText(productRow.getCompareUnitPriceWithUnit());
-
-            final View finalView = convertView;
-            holder.link.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    Bundle bundle = new Bundle();
-                    Intent intent = new Intent(getContext(), StorePageActivity.class);
-                    bundle.putString("itemURL", productRow.getUrl().toString());
-                    intent.putExtras(bundle);
-                    finalView.getContext().startActivity(intent);
-                }
-            });
-            */
-
+        convertView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(activity, LaunchInfo.class);
+                Bundle bundle = new Bundle();
+                bundle.putParcelable("LaunchObject", launch);
+                intent.putExtras(bundle);
+                activity.startActivity(intent);
+            }
+        });
         //}
+
         return convertView;
     }
 
@@ -110,8 +113,7 @@ public class LaunchAdapter extends ArrayAdapter<Launch> {
         int minutes = (int) Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
         int seconds = (int) Math.floor((distance % (1000 * 60)) / 1000);
 
-        String time = days + "d " + hours + "h "
-                + minutes + "m " + seconds + "s ";
-        return time;
+
+        return String.format(Locale.getDefault(), "%dd %hh %dm %ds", days, hours, minutes, seconds);
     }
 }

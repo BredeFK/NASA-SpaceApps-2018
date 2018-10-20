@@ -1,6 +1,9 @@
 package nasa.space.apps.rocketlaunch.data;
 
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -8,7 +11,8 @@ import java.util.Date;
 import java.util.Locale;
 import java.util.TimeZone;
 
-public class Launch {
+public class Launch implements Parcelable {
+
     private int id;
     private String name;
     private Location location;
@@ -18,9 +22,49 @@ public class Launch {
     private ArrayList<Mission> missions;
     private Lsp lsp;
 
-
     public Launch() {
     }
+
+
+    protected Launch(Parcel in) {
+        id = in.readInt();
+        name = in.readString();
+        location = in.readParcelable(Location.class.getClassLoader());
+        net = in.readString();
+        netInMills = in.readLong();
+        rocket = in.readParcelable(Rocket.class.getClassLoader());
+        missions = in.createTypedArrayList(Mission.CREATOR);
+        lsp = in.readParcelable(Lsp.class.getClassLoader());
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeInt(id);
+        dest.writeString(name);
+        dest.writeParcelable(location, flags);
+        dest.writeString(net);
+        dest.writeLong(netInMills);
+        dest.writeParcelable(rocket, flags);
+        dest.writeTypedList(missions);
+        dest.writeParcelable(lsp, flags);
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    public static final Creator<Launch> CREATOR = new Creator<Launch>() {
+        @Override
+        public Launch createFromParcel(Parcel in) {
+            return new Launch(in);
+        }
+
+        @Override
+        public Launch[] newArray(int size) {
+            return new Launch[size];
+        }
+    };
 
     public String getName() {
         return name;

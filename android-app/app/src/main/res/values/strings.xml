@@ -2,4 +2,7 @@
     <string name="app_name">Rocket Launch</string>
     <string name="image_of_rocket">Image of Rocket</string>
     <string name="take_off">TAKE OFF!</string>
+    <string name="notifications">Notifications</string>
+    <string name="all">All</string>
+    <string name="settings">Settings</string>
 </resources>

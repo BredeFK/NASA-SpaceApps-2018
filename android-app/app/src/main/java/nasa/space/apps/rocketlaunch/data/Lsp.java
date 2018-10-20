@@ -1,11 +1,30 @@
 package nasa.space.apps.rocketlaunch.data;
 
-public class Lsp {
+import android.os.Parcel;
+import android.os.Parcelable;
+
+public class Lsp implements Parcelable {
+    public static final Creator<Lsp> CREATOR = new Creator<Lsp>() {
+        @Override
+        public Lsp createFromParcel(Parcel in) {
+            return new Lsp(in);
+        }
+
+        @Override
+        public Lsp[] newArray(int size) {
+            return new Lsp[size];
+        }
+    };
     private String name;
-    private String wikiURL;
+    private String wikiurl;
 
-    public Lsp(){
+    public Lsp() {
 
+    }
+
+    protected Lsp(Parcel in) {
+        name = in.readString();
+        wikiurl = in.readString();
     }
 
     public String getName() {
@@ -16,20 +35,31 @@ public class Lsp {
         this.name = name;
     }
 
-    public String getWikiURL() {
-        return wikiURL;
+    public String getWikiurl() {
+        return wikiurl;
     }
 
-    public void setWikiURL(String wikiURL) {
-        this.wikiURL = wikiURL;
+    public void setWikiurl(String wikiurl) {
+        this.wikiurl = wikiurl;
     }
 
     @Override
     public String toString() {
-        if(name != null && wikiURL != null){
-            return String.format("%nLSP NAME: %s%nLSP WIKIURL: %s", name, wikiURL);
+        if (name != null && wikiurl != null) {
+            return String.format("%nLSP NAME: %s%nLSP WIKIURL: %s", name, wikiurl);
         }
         return "";
 
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(name);
+        dest.writeString(wikiurl);
     }
 }
