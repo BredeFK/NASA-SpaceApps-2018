@@ -12,7 +12,7 @@ type Launch struct {
 	Net			string		`json:"net" bson:"net"`
 	Rocket		Rocket		`json:"rocket" bson:"rocket"`
 	Missions	[]Missions	`json:"missions" bson:"missions"`
-	//Lsp			Lsp			`json:"lsp" bson:"lsp"`
+	Lsp			Lsp			`json:"lsp" bson:"lsp"`
 }
 
 type Rocket struct {
@@ -38,8 +38,8 @@ type Pads struct {
 	Name 		string 		`json:"name" bson:"name"`
 	Wikiurl		string		`json:"wikiurl" bson:wikiurl`
 }
-/*
+
 type Lsp struct {
 	Name		string		`json:"name" bson:"name"`
 	Wikiurl		string		`json:"wikiurl" bson:"wikiurl"`
-}*/
+}
