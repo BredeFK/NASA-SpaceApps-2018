@@ -5,7 +5,7 @@ import java.util.ArrayList;
 public class Location {
     private ArrayList<Pad> pads;
     private String name;
-    private String countryCode;
+    private String countrycode;
 
     public Location() {
 
@@ -27,12 +27,12 @@ public class Location {
         this.name = name;
     }
 
-    public String getCountryCode() {
-        return countryCode;
+    public String getCountrycode() {
+        return countrycode;
     }
 
-    public void setCountryCode(String countryCode) {
-        this.countryCode = countryCode;
+    public void setCountrycode(String countrycode) {
+        this.countrycode = countrycode;
     }
 
     @Override
@@ -42,6 +42,6 @@ public class Location {
             if(pad.toString() != null)
                 padsString.append(pad.toString());
         }
-        return String.format("%nLOCATION name: %s%nLOCATION COUNTRY CODE: %s%s", name, countryCode,padsString.toString());
+        return String.format("%nLOCATION name: %s%nLOCATION COUNTRY CODE: %s%s", name, countrycode,padsString.toString());
     }
 }

@@ -3,6 +3,8 @@ package nasa.space.apps.rocketlaunch;
 import android.os.Bundle;
 import android.os.StrictMode;
 import android.support.v7.app.AppCompatActivity;
+import android.widget.ListView;
+import android.widget.Toast;
 
 import com.google.gson.Gson;
 
@@ -27,25 +29,15 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        // TODO : Change this to Heroku link
-        String dataURL = "https://launchlibrary.net/1.4/launch/next/1000";
+        String dataURL = "https://nasa-spaceapps-2018.herokuapp.com/api";
+
 
         // TODO : Fix nullpointer in LSP
 
-        overrideNetworkOnMainThreadException();
-        ArrayList<Launch> launches = null;
-
         try {
-            launches = fillLaunchArray(dataURL);
+            fillLaunchList(dataURL);
         } catch (IOException | JSONException e) {
-            System.out.println("gError: " + e.getMessage());
-        }
-
-        if (launches != null) {
-            System.out.print("RESULT\n");
-            for (Launch launch : launches) {
-                System.out.println(launch.toString());
-            }
+            System.out.println("ERROR: " + e.getMessage());
         }
     }
 
@@ -57,21 +49,21 @@ public class MainActivity extends AppCompatActivity {
     }
 
     protected ArrayList<Launch> fillLaunchArray(String urlName) throws IOException, JSONException {
-        ArrayList<Launch> launches = new ArrayList<>();
+        overrideNetworkOnMainThreadException();
         URL url = new URL(urlName);
         JSONObject jsonObject = getJsonObjectFromURL(url);
 
         if (jsonObject == null) {
-            return launches;
+            return new ArrayList<>();
         }
 
         JSONArray jsonArray = jsonObject.getJSONArray("launches");
 
         Gson gson = new Gson();
 
-        Launch[] launches1 = gson.fromJson(jsonArray.toString(), Launch[].class);
+        Launch[] launches = gson.fromJson(jsonArray.toString(), Launch[].class);
 
-        return new ArrayList<>(Arrays.asList(launches1));
+        return new ArrayList<>(Arrays.asList(launches));
     }
 
     private JSONObject getJsonObjectFromURL(URL url) throws IOException {
@@ -90,5 +82,24 @@ public class MainActivity extends AppCompatActivity {
             is.close();
         }
         return null;
+    }
+
+    private void fillLaunchList(String url) throws IOException, JSONException {
+        ListView listView = findViewById(R.id.LaunchesList);
+        ArrayList<Launch> launches = fillLaunchArray(url);
+        LaunchAdapter adapter = new LaunchAdapter(MainActivity.this, R.layout.launch_item);
+        if(launches.size() != 0){
+            adapter.clear();
+            for(Launch launch: launches){
+                launch.setnetInMills();
+                launch.getRocket().setImageInBitmap();
+                adapter.add(launch);
+            }
+            listView.setAdapter(adapter);
+        } else {
+            Toast.makeText(MainActivity.this, "Could not get data :/", Toast.LENGTH_LONG).show();
+        }
+
+
     }
 }
