@@ -3,10 +3,12 @@ package nasa.space.apps.rocketlaunch;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.os.CountDownTimer;
+import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
 import android.view.View;
 import android.view.ViewGroup;
@@ -30,6 +32,7 @@ public class LaunchAdapter extends ArrayAdapter<Launch> {
     private Activity activity;
     private int resource;
     private boolean test = false;
+    private SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(getContext());
 
 
     public LaunchAdapter(@NonNull Context context, int resource) {
@@ -77,24 +80,29 @@ public class LaunchAdapter extends ArrayAdapter<Launch> {
             }
         }
 
+
         new CountDownTimer(launch.getNetInMills() - System.currentTimeMillis(), 1000) {
 
             public void onTick(long millisUntilFinished) {
                 holder.timeLeft.setText(getTimeInSmoothFormat(launch.getNetInMills() - System.currentTimeMillis()));
+                if ((launch.getNetInMills() - System.currentTimeMillis() - 900000) < 0 && (launch.getNetInMills() - System.currentTimeMillis() - 900000) > -2000) {
+                    boolean isChecked = preferences.getBoolean("checked", true);
+                    if (isChecked) {
+                        Intent serviceIntent = new Intent(activity, Notification.class);
+                        activity.startService(serviceIntent);
+                    }
+                }
             }
 
             public void onFinish() {
                 holder.timeLeft.setText(R.string.take_off);
-
-
-                // TODO : possibly notify user
             }
         }.start();
-
 
         convertView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
                 Intent intent = new Intent(activity, LaunchInfo.class);
                 Bundle bundle = new Bundle();
                 bundle.putParcelable("LaunchObject", launch);
@@ -102,7 +110,6 @@ public class LaunchAdapter extends ArrayAdapter<Launch> {
                 activity.startActivity(intent);
             }
         });
-        //}
 
         return convertView;
     }
@@ -114,6 +121,6 @@ public class LaunchAdapter extends ArrayAdapter<Launch> {
         int seconds = (int) Math.floor((distance % (1000 * 60)) / 1000);
 
 
-        return String.format(Locale.getDefault(), "%dd %hh %dm %ds", days, hours, minutes, seconds);
+        return String.format(Locale.getDefault(), "%dd %dh %dm %ds", days, hours, minutes, seconds);
     }
 }

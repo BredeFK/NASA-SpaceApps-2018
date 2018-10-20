@@ -21,6 +21,8 @@
         </activity>
         <activity android:name=".LaunchInfo" />
         <activity android:name=".SettingsActivity"></activity>
+
+        <service android:name=".Notification" />
     </application>
 
 </manifest>

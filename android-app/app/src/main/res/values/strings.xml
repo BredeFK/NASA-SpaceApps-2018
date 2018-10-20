@@ -10,4 +10,7 @@
     <string name="pad">Pad:</string>
     <string name="rocket">Rocket:</string>
     <string name="launch_services_program">Launch Services Program:</string>
+    <string name="message">is taking off now!</string>
+    <string name="messageSoon">A rocket is taking off soon!</string>
+    <string name="no_mission">No Mission</string>
 </resources>

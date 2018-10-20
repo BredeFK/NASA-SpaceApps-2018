@@ -44,8 +44,13 @@ public class LaunchInfo extends AppCompatActivity {
             if (launch != null) {
                 launchName.setText(launch.getName());
                 image.setImageBitmap(launch.getRocket().getImageInBitmap());
-                mission.setText(launch.getMissions().get(0).getName());
-                missionDescription.setText(launch.getMissions().get(0).getDescription());
+                if (launch.getMissions().size() > 0) {
+                    mission.setText(launch.getMissions().get(0).getName());
+                    missionDescription.setText(launch.getMissions().get(0).getDescription());
+                } else {
+                    mission.setText(R.string.no_mission);
+                    missionDescription.setText("N/A");
+                }
                 lspInfo.setText(launch.getLsp().getName());
                 rocketNameAndFamily.setText(String.format("%s | %s", launch.getRocket().getName(), launch.getRocket().getFamilyname()));
                 locationAndCountry.setText(String.format("%s [%s]", launch.getLocation().getName(), launch.getLocation().getCountrycode()));
@@ -60,14 +65,16 @@ public class LaunchInfo extends AppCompatActivity {
                     }
                 });
 
-                if (finalLaunch.getMissions().get(0).getWikiurl() != null) {
-                    isClickable(mission);
-                    mission.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-                            openWebPage(finalLaunch.getMissions().get(0).getWikiurl());
-                        }
-                    });
+                if (finalLaunch.getMissions().size() > 0) {
+                    if (finalLaunch.getMissions().get(0).getWikiurl() != null) {
+                        isClickable(mission);
+                        mission.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                openWebPage(finalLaunch.getMissions().get(0).getWikiurl());
+                            }
+                        });
+                    }
                 }
 
                 if (finalLaunch.getLsp().getWikiurl() != null) {
