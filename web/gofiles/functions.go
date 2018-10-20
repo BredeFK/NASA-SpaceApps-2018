@@ -16,8 +16,6 @@ func HandleMain(w http.ResponseWriter, r *http.Request){
 
 	var data Launches
 
-	//data = getApi()
-
 	data = getAllFromDB()
 
 	temp.Execute(w, data)
@@ -36,7 +34,7 @@ func HandleAPI(w http.ResponseWriter, r *http.Request){
 }
 
 func getApi()Launches{
-	resp, err := http.Get("https://launchlibrary.net/1.4/launch/next/50?fields=name,id,location,net,pads,rocket,missions,lsp")
+	resp, err := http.Get("https://launchlibrary.net/1.4/launch/next/50")
 	if err != nil {
 		log.Fatal(err)
 	}
