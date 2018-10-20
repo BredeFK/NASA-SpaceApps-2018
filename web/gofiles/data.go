@@ -1,45 +1,45 @@
 package gofiles
 
 type Launches struct{
-	Launch 		[]Launch 	`json:"launches"`
+	Launch 		[]Launch 	`json:"launches" bson:"launches"`
 }
 
 
 type Launch struct {
-	Id 			int 		`json:"id"`
-	Name 		string 		`json:"name"`
-	Location 	Location 	`json:"location"`
-	Net			string		`json:"net"`
-	Rocket		Rocket		`json:"rocket"`
-	Missions	[]Missions	`json:"missions"`
-	//Lsp			Lsp			`json:"lsp"`
+	Id 			int 		`json:"id" bson:"id"`
+	Name 		string 		`json:"name" bson:"name"`
+	Location 	Location 	`json:"location" bson:"location"`
+	Net			string		`json:"net" bson:"net"`
+	Rocket		Rocket		`json:"rocket" bson:"rocket"`
+	Missions	[]Missions	`json:"missions" bson:"missions"`
+	//Lsp			Lsp			`json:"lsp" bson:"lsp"`
 }
 
 type Rocket struct {
-	Name 		string		`json:"name"`
-	Familyname 	string		`json:"familyname"`
-	Wikiurl		string		`json:"wikiurl"`
-	Imageurl	string		`json:"imageurl"`
+	Name 		string		`json:"name" bson:"name"`
+	Familyname 	string		`json:"familyname" bson:"familyname"`
+	Wikiurl		string		`json:"wikiurl" bson:"wikiurl"`
+	Imageurl	string		`json:"imageurl" bson:"imageurl"`
 }
 
 type Missions struct {
-	Name 		string		`json:"name"`
-	Description string		`json:"description"`
-	Wikiurl		string		`json:"wikiurl"`
+	Name 		string		`json:"name" bson:"name"`
+	Description string		`json:"description" bson:"description"`
+	Wikiurl		string		`json:"wikiurl" bson:"wikiurl"`
 }
 
 type Location struct {
-	Name 		string 		`json:"name"`
-	Countrycode string		`json:"countrycode"`
-	Pads 		[]Pads 		`json:"pads"`
+	Name 		string 		`json:"name" bson:"name"`
+	Countrycode string		`json:"countrycode" bson:"countrycode"`
+	Pads 		[]Pads 		`json:"pads" bson:"pads"`
 }
 
 type Pads struct {
-	Name 		string 		`json:"name"`
-	Wikiurl		string		`json:"wikiurl"`
+	Name 		string 		`json:"name" bson:"name"`
+	Wikiurl		string		`json:"wikiurl" bson:wikiurl`
 }
 /*
 type Lsp struct {
-	Name		string		`json:"name"`
-	Wikiurl		string		`json:"wikiurl"`
+	Name		string		`json:"name" bson:"name"`
+	Wikiurl		string		`json:"wikiurl" bson:"wikiurl"`
 }*/
