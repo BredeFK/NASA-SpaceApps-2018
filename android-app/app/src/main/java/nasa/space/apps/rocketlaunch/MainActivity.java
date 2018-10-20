@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.StrictMode;
+import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -89,16 +90,21 @@ public class MainActivity extends AppCompatActivity {
 
     private void fillLaunchList(String url) throws IOException, JSONException {
         ListView listView = findViewById(R.id.LaunchesList);
+        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
+        String all = getResources().getString(R.string.all);
+        String choice = preferences.getString("lpsChoice", all);
         launches = fillLaunchArray(url);
         LaunchAdapter adapter = new LaunchAdapter(MainActivity.this, R.layout.launch_item);
         if (launches.size() != 0) {
             adapter.clear();
             for (Launch launch : launches) {
-                //    if(launch.getLsp().getName().equals("SpaceX")){
-                launch.setnetInMills();
-                adapter.add(launch);
-                //    }
-
+                if(choice.equals(all)){
+                    launch.setnetInMills();
+                    adapter.add(launch);
+                } else if(launch.getLsp().getName().equals(choice)){
+                    launch.setnetInMills();
+                    adapter.add(launch);
+                }
             }
             listView.setAdapter(adapter);
         } else {
