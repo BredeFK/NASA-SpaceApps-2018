@@ -4,9 +4,10 @@ import (
 	"fmt"
 	"gopkg.in/mgo.v2"
 	"gopkg.in/mgo.v2/bson"
+	"os"
 )
 
-var dbURL = "mongodb://johan:johan123@ds237373.mlab.com:37373/nasaspaceapps2018"
+var dbURL = os.Getenv("MONGODB")
 
 //DatabaseCon connects to database and returns session
 func DatabaseCon() *mgo.Session {
@@ -39,7 +40,7 @@ func getAllFromDB() Launches{
 	defer db.Close()
 	c := db.DB("nasaspaceapps2018").C("launches")
 
-	err := c.Find(nil).All(&data)
+	err := c.Find(nil).Sort("_id").All(&data)
 	if err != nil{
 		fmt.Printf("Something went to sheit: %s", err)
 	}
@@ -49,7 +50,18 @@ func getAllFromDB() Launches{
 	return launches
 }
 
-func getLaunchFromDB(id int) Launch{
+func DeleteLaunchesFromDB(){
+	db := DatabaseCon()
+	defer db.Close()
+	c := db.DB("nasaspaceapps2018").C("launches")
+	_, err := c.RemoveAll(nil)
+	if err != nil{
+		fmt.Println("something went to sheit " + err.Error())
+	}
+
+}
+
+func getLaunchFromDB(id int) (Launch, error){
 	db := DatabaseCon()
 	defer db.Close()
 	c := db.DB("nasaspaceapps2018").C("launches")
@@ -62,5 +74,20 @@ func getLaunchFromDB(id int) Launch{
 
 	}
 
-	return data
+	return data, err
+}
+
+func updateLaunchFromDB(id int, launch Launch){
+	db := DatabaseCon()
+	defer db.Close()
+	c := db.DB("nasaspaceapps2018").C("launches")
+
+	err := c.Update(bson.M{"id": id}, bson.M{"$set": bson.M{"name": launch.Name, "location": launch.Location, "net": launch.Net, "rocket": launch.Rocket, "missions": launch.Missions}})
+	if err != nil{
+		fmt.Printf("Something went to sheit: %s", err)
+	}else{
+		fmt.Printf("Launch with id: %d has been updated.", id)
+	}
+
+
 }
