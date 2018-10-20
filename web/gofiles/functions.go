@@ -16,15 +16,18 @@ func HandleMain(w http.ResponseWriter, r *http.Request){
 
 	var data Launches
 
-	//content = fillContent(content)
-	data = getApi()
+	//data = getApi()
+
+	data = getAllFromDB()
 
 	temp.Execute(w, data)
 }
 
 func HandleAPI(w http.ResponseWriter, r *http.Request){
 
-	data := getApi()
+	//data := getApi()
+
+	data := getAllFromDB()
 
 	http.Header.Add(w.Header(), "content-type", "application/json")
 
@@ -46,4 +49,17 @@ func getApi()Launches{
 	}
 
 	return data
+}
+
+func HandleUpload(w http.ResponseWriter, r *http.Request){
+	/*launches := getApi()
+	for i := range launches.Launch {
+		SaveData(launches.Launch[i])
+	}*/
+
+	data := getLaunchFromDB(1069)
+
+	http.Header.Add(w.Header(), "content-type", "application/json")
+
+	json.NewEncoder(w).Encode(data)
 }
