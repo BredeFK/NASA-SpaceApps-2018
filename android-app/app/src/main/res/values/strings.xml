@@ -5,4 +5,9 @@
     <string name="notifications">Notifications</string>
     <string name="all">All</string>
     <string name="settings">Settings</string>
+    <string name="description">Description:</string>
+    <string name="location">Location:</string>
+    <string name="pad">Pad:</string>
+    <string name="rocket">Rocket:</string>
+    <string name="launch_services_program">Launch Services Program:</string>
 </resources>
