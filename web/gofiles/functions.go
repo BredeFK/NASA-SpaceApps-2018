@@ -57,9 +57,26 @@ func HandleUpload(w http.ResponseWriter, r *http.Request){
 		SaveData(launches.Launch[i])
 	}*/
 
-	data := getLaunchFromDB(1069)
+	//data := getLaunchFromDB(1069)
 
-	http.Header.Add(w.Header(), "content-type", "application/json")
+	//http.Header.Add(w.Header(), "content-type", "application/json")
 
-	json.NewEncoder(w).Encode(data)
+	//json.NewEncoder(w).Encode(data)
+
+	UpdateDatabase()
+}
+
+func UpdateDatabase(){
+	var freshData Launches
+
+	freshData = getApi()
+
+	if len(freshData.Launch) > 1 {
+		DeleteLaunchesFromDB()
+
+		for i := range freshData.Launch {
+			SaveData(freshData.Launch[i])
+			fmt.Printf("Saved Launch with ID: %d\n", freshData.Launch[i].Id)
+		}
+	}
 }
