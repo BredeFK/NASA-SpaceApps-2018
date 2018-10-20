@@ -18,12 +18,6 @@ func HandleMain(w http.ResponseWriter, r *http.Request){
 
 	data = getAllFromDB()
 
-	if r.Method == "GET" {
-		
-
-	}
-
-
 	temp.Execute(w, data)
 }
 
