@@ -7,7 +7,7 @@
     android:layout_height="wrap_content">
 
     <ImageView
-        android:id="@+id/launch_image"
+        android:id="@+id/info_image"
         android:layout_width="fill_parent"
         android:layout_height="200dp"
         android:contentDescription="@string/image_of_rocket"
@@ -18,23 +18,23 @@
         android:id="@+id/launch_timeLeft"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="50dp"
+        android:layout_marginTop="30dp"
+        android:background="@color/textBackground"
         android:fontFamily="sans-serif-smallcaps"
         android:textAlignment="center"
         android:textColor="@android:color/black"
         android:textSize="24sp"
         app:layout_constraintEnd_toEndOf="parent"
-        android:background="@color/textBackground"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         tools:text="4d 12h 18m 22s" />
 
     <TextView
-        android:id="@+id/launch_name"
-        android:background="@color/textBackground"
+        android:id="@+id/info_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
+        android:background="@color/textBackground"
         android:textAlignment="center"
         android:textColor="@android:color/black"
         android:textSize="18sp"
@@ -43,6 +43,21 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/launch_timeLeft"
         tools:text="Rokot / Briz-KM | Gonets-M24, Gonets-M25, Gonets-M26 &amp; 2 x Blits-M" />
+
+    <TextView
+        android:id="@+id/launch_lsp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@color/textBackground"
+        android:textAlignment="center"
+        android:textColor="@android:color/black"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginBottom="20dp"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        tools:text="Russian Space Forces" />
 
 
 </android.support.constraint.ConstraintLayout>

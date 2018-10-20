@@ -1,8 +1,13 @@
 package nasa.space.apps.rocketlaunch;
 
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.StrictMode;
 import android.support.v7.app.AppCompatActivity;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.widget.ListView;
 import android.widget.Toast;
 
@@ -24,15 +29,13 @@ import java.util.Arrays;
 import nasa.space.apps.rocketlaunch.data.Launch;
 
 public class MainActivity extends AppCompatActivity {
+    private ArrayList<Launch> launches;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         String dataURL = "https://nasa-spaceapps-2018.herokuapp.com/api";
-
-
-        // TODO : Fix nullpointer in LSP
 
         try {
             fillLaunchList(dataURL);
@@ -86,20 +89,54 @@ public class MainActivity extends AppCompatActivity {
 
     private void fillLaunchList(String url) throws IOException, JSONException {
         ListView listView = findViewById(R.id.LaunchesList);
-        ArrayList<Launch> launches = fillLaunchArray(url);
+        launches = fillLaunchArray(url);
         LaunchAdapter adapter = new LaunchAdapter(MainActivity.this, R.layout.launch_item);
-        if(launches.size() != 0){
+        if (launches.size() != 0) {
             adapter.clear();
-            for(Launch launch: launches){
+            for (Launch launch : launches) {
+                //    if(launch.getLsp().getName().equals("SpaceX")){
                 launch.setnetInMills();
-                launch.getRocket().setImageInBitmap();
                 adapter.add(launch);
+                //    }
+
             }
             listView.setAdapter(adapter);
         } else {
             Toast.makeText(MainActivity.this, "Could not get data :/", Toast.LENGTH_LONG).show();
         }
+    }
 
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.action_settings, menu);
+        return true;
+    }
 
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if (item.getItemId() == R.id.action_settings) {
+
+            Intent intent = new Intent(MainActivity.this, SettingsActivity.class);
+            sendLSPnamesForSpinner(intent);
+            startActivity(intent);
+        }
+        return true;
+    }
+
+    private void sendLSPnamesForSpinner(Intent intent) {
+        ArrayList<String> lspNames = new ArrayList<>();
+        if (launches != null) {
+            lspNames.add(getString(R.string.all));
+            for (Launch launch : launches) {
+                if (!lspNames.contains(launch.getLsp().getName()))
+                    lspNames.add(launch.getLsp().getName());
+            }
+        }
+
+        intent.putExtra("length", lspNames.size());
+        for (int i = 0; i < lspNames.size(); i++) {
+            intent.putExtra("name" + i, lspNames.get(i));
+        }
     }
 }

@@ -2,13 +2,15 @@ package nasa.space.apps.rocketlaunch.data;
 
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.os.Parcel;
+import android.os.Parcelable;
 
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
-public class Rocket {
+public class Rocket implements Parcelable {
     private String name;
     private String familyname;
     private String wikiurl;
@@ -18,6 +20,40 @@ public class Rocket {
     public Rocket() {
 
     }
+
+    protected Rocket(Parcel in) {
+        name = in.readString();
+        familyname = in.readString();
+        wikiurl = in.readString();
+        imageurl = in.readString();
+        imageInBitmap = in.readParcelable(Bitmap.class.getClassLoader());
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(name);
+        dest.writeString(familyname);
+        dest.writeString(wikiurl);
+        dest.writeString(imageurl);
+        dest.writeParcelable(imageInBitmap, flags);
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    public static final Creator<Rocket> CREATOR = new Creator<Rocket>() {
+        @Override
+        public Rocket createFromParcel(Parcel in) {
+            return new Rocket(in);
+        }
+
+        @Override
+        public Rocket[] newArray(int size) {
+            return new Rocket[size];
+        }
+    };
 
     public static Bitmap getBitmapFromURL(String src) {
         try {
@@ -66,11 +102,7 @@ public class Rocket {
     }
 
     public Bitmap getImageInBitmap() {
-        return imageInBitmap;
-    }
-
-    public void setImageInBitmap() {
-        this.imageInBitmap = getBitmapFromURL(this.imageurl);
+        return getBitmapFromURL(imageurl);
     }
 
     @Override
