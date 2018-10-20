@@ -4,7 +4,6 @@ type Launches struct{
 	Launch 		[]Launch 	`json:"launches" bson:"launches"`
 }
 
-
 type Launch struct {
 	Id 			int 		`json:"id" bson:"id"`
 	Name 		string 		`json:"name" bson:"name"`
@@ -36,7 +35,7 @@ type Location struct {
 
 type Pads struct {
 	Name 		string 		`json:"name" bson:"name"`
-	Wikiurl		string		`json:"wikiurl" bson:wikiurl`
+	Wikiurl		string		`json:"wikiurl" bson:"wikiurl"`
 }
 
 type Lsp struct {
