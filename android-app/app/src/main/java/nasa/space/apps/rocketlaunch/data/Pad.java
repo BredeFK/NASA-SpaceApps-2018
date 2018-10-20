@@ -2,7 +2,7 @@ package nasa.space.apps.rocketlaunch.data;
 
 public class Pad {
     private String name;
-    private String wikiURL;
+    private String wikiurl;
 
     public Pad(){
 
@@ -16,16 +16,16 @@ public class Pad {
         this.name = name;
     }
 
-    public String getWikiURL() {
-        return wikiURL;
+    public String getWikiurl() {
+        return wikiurl;
     }
 
-    public void setWikiURL(String wikiURL) {
-        this.wikiURL = wikiURL;
+    public void setWikiurl(String wikiurl) {
+        this.wikiurl = wikiurl;
     }
 
     @Override
     public String toString() {
-        return String.format("%nPAD NAME: %s%nPAD WIKIURL: %s", name, wikiURL);
+        return String.format("%nPAD NAME: %s%nPAD WIKIURL: %s", name, wikiurl);
     }
 }

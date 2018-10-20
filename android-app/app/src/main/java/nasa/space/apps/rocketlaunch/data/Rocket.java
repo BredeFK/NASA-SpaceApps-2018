@@ -1,13 +1,36 @@
 package nasa.space.apps.rocketlaunch.data;
 
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+
+import java.io.IOException;
+import java.io.InputStream;
+import java.net.HttpURLConnection;
+import java.net.URL;
+
 public class Rocket {
     private String name;
-    private String familyName;
-    private String wikiURL;
-    private String imageURL;
+    private String familyname;
+    private String wikiurl;
+    private String imageurl;
+    private Bitmap imageInBitmap;
 
-    public Rocket(){
+    public Rocket() {
 
+    }
+
+    public static Bitmap getBitmapFromURL(String src) {
+        try {
+            URL url = new URL(src);
+            HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+            connection.setDoInput(true);
+            connection.connect();
+            InputStream input = connection.getInputStream();
+            return BitmapFactory.decodeStream(input);
+        } catch (IOException e) {
+            // Log exception
+            return null;
+        }
     }
 
     public String getName() {
@@ -18,32 +41,42 @@ public class Rocket {
         this.name = name;
     }
 
-    public String getFamilyName() {
-        return familyName;
+    public String getFamilyname() {
+        return familyname;
     }
 
-    public void setFamilyName(String familyName) {
-        this.familyName = familyName;
+    public void setFamilyname(String familyname) {
+        this.familyname = familyname;
     }
 
-    public String getWikiURL() {
-        return wikiURL;
+    public String getWikiurl() {
+        return wikiurl;
     }
 
-    public void setWikiURL(String wikiURL) {
-        this.wikiURL = wikiURL;
+    public void setWikiurl(String wikiurl) {
+        this.wikiurl = wikiurl;
     }
 
-    public String getImageURL() {
-        return imageURL;
+    public String getImageurl() {
+        return imageurl;
     }
 
-    public void setImageURL(String imageURL) {
-        this.imageURL = imageURL;
+    public void setImageurl(String imageurl) {
+        this.imageurl = imageurl;
+    }
+
+    public Bitmap getImageInBitmap() {
+        return imageInBitmap;
+    }
+
+    public void setImageInBitmap() {
+        this.imageInBitmap = getBitmapFromURL(this.imageurl);
     }
 
     @Override
     public String toString() {
-        return String.format("%nROCKET NAME: %s%nROCKET FAMILY NAME: %s%nROCKET WIKI URL: %s%nIMAGE URL: %s", name, familyName, wikiURL, imageURL);
+        return String.format("%nROCKET NAME: %s%nROCKET FAMILY NAME: %s%nROCKET WIKI URL: %s%nIMAGE URL: %s", name, familyname, wikiurl, imageurl);
     }
+
+
 }

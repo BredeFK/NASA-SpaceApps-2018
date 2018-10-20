@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/launch_layout"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content">
+
+    <ImageView
+        android:id="@+id/launch_image"
+        android:layout_width="fill_parent"
+        android:layout_height="200dp"
+        android:contentDescription="@string/image_of_rocket"
+        android:scaleType="centerCrop"
+        app:srcCompat="@android:color/black" />
+
+    <TextView
+        android:id="@+id/launch_timeLeft"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="50dp"
+        android:fontFamily="sans-serif-smallcaps"
+        android:textAlignment="center"
+        android:textColor="@android:color/black"
+        android:textSize="24sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:background="@color/textBackground"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="4d 12h 18m 22s" />
+
+    <TextView
+        android:id="@+id/launch_name"
+        android:background="@color/textBackground"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:textAlignment="center"
+        android:textColor="@android:color/black"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/launch_timeLeft"
+        tools:text="Rokot / Briz-KM | Gonets-M24, Gonets-M25, Gonets-M26 &amp; 2 x Blits-M" />
+
+
+</android.support.constraint.ConstraintLayout>
