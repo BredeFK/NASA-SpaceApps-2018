@@ -3,6 +3,7 @@ package nasa.space.apps.rocketlaunch.data;
 
 import android.os.Parcel;
 import android.os.Parcelable;
+import android.widget.Toast;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -10,6 +11,8 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.Locale;
 import java.util.TimeZone;
+
+import nasa.space.apps.rocketlaunch.MainActivity;
 
 public class Launch implements Parcelable {
 
@@ -115,15 +118,17 @@ public class Launch implements Parcelable {
     }
 
     public void setnetInMills() {
-        SimpleDateFormat format = new SimpleDateFormat("MMMM dd, yyyy HH:mm:ss", Locale.getDefault());
+        SimpleDateFormat format = new SimpleDateFormat("MMMM dd, yyyy HH:mm:ss", Locale.ENGLISH);
         format.setTimeZone(TimeZone.getTimeZone("UTC"));
+        String dateString = net.replace(" UTC", "");
 
-        Date date = null;
         try {
-            date = format.parse(net.replace(" UTC", ""));
+            Date date = format.parse(dateString);
+            System.out.println("NOT ERROR: " + dateString);
             this.netInMills = date.getTime();
         } catch (ParseException e) {
-            this.netInMills = -1;
+            System.out.println("ERROR: " + dateString);
+            this.netInMills = System.currentTimeMillis();
         }
     }
 

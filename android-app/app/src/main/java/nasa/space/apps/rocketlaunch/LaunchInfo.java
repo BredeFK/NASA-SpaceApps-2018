@@ -65,7 +65,7 @@ public class LaunchInfo extends AppCompatActivity {
                     }
                 });
 
-                if (finalLaunch.getMissions().size() > 0) {
+                if (finalLaunch.getMissions().size() > 0 && !finalLaunch.getMissions().get(0).getWikiurl().isEmpty()) {
                     if (finalLaunch.getMissions().get(0).getWikiurl() != null) {
                         isClickable(mission);
                         mission.setOnClickListener(new View.OnClickListener() {
@@ -97,7 +97,7 @@ public class LaunchInfo extends AppCompatActivity {
                     });
                 }
 
-                if (finalLaunch.getLocation().getPads().get(0).getWikiurl() != null) {
+                if (finalLaunch.getLocation().getPads().size() > 0 && !finalLaunch.getLocation().getPads().get(0).getWikiurl().isEmpty()) {
                     isClickable(pad);
                     pad.setOnClickListener(new View.OnClickListener() {
                         @Override
