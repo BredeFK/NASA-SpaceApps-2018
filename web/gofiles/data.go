@@ -9,6 +9,7 @@ type Launch struct {
 	Name 		string 		`json:"name" bson:"name"`
 	Location 	Location 	`json:"location" bson:"location"`
 	Net			string		`json:"net" bson:"net"`
+	Vidurls		[]string 	`json:"vidURLs" bson:"vidURLs"`
 	Rocket		Rocket		`json:"rocket" bson:"rocket"`
 	Missions	[]Missions	`json:"missions" bson:"missions"`
 	Lsp			Lsp			`json:"lsp" bson:"lsp"`
@@ -25,6 +26,7 @@ type Missions struct {
 	Name 		string		`json:"name" bson:"name"`
 	Description string		`json:"description" bson:"description"`
 	Wikiurl		string		`json:"wikiurl" bson:"wikiurl"`
+	Agencies 	[]Agencies 	`json:"agencies" bson:"agencies"`
 }
 
 type Location struct {
@@ -41,4 +43,9 @@ type Pads struct {
 type Lsp struct {
 	Name		string		`json:"name" bson:"name"`
 	Wikiurl		string		`json:"wikiurl" bson:"wikiurl"`
+}
+
+type Agencies struct {
+	Name 		string		`json:"name" bson:"name"`
+	Wikiurl		string		`json:"wikiURL" bson:"wikiURL"`
 }
